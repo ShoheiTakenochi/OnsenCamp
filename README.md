@@ -46,9 +46,9 @@
     - google_maps_service (Google Maps API)
     - Google Places API を活用し、近くの温泉情報を取得
 - 最寄りの温泉施設の表示
- - 実装方法:
+  - 実装方法:
     - Google Places API を使い、「温泉」「スパ」カテゴリで検索
     - 指定したキャンプ場の座標をもとに、半径〇km内の温泉施設を取得
     - 検索結果をリスト表示＋地図上にマーカーを追加
-  -API/Gem:
+  - API/Gem:
     - google_places (Googleの施設情報取得)
