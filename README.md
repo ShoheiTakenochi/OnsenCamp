@@ -71,3 +71,7 @@
 ## 画面推移図
 
 https://www.figma.com/design/EmxAvAyLwdunERz1j7JoFt/OnsenCamp?node-id=0-1&p=f&t=VKO4DVq8QXSKK0lp-0
+
+## ER図
+
+[![Image from Gyazo](https://i.gyazo.com/66c081018177680d9b59079188293364.png)](https://gyazo.com/66c081018177680d9b59079188293364)
