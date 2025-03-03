@@ -57,7 +57,7 @@
   - 実装方法:
     - フロントエンドで Google Maps JavaScript API を利用
     - ユーザーがキャンプ場を検索したら、その地点を中心に温泉施設を表示
-  -API/Gem:
+  - API/Gem:
     - google_maps_service (Google Maps API)
     - Google Places API を活用し、近くの温泉情報を取得
 - 最寄りの温泉施設の表示
@@ -82,20 +82,20 @@ https://www.figma.com/design/EmxAvAyLwdunERz1j7JoFt/OnsenCamp?node-id=0-1&p=f&t=
  - favoritesテーブル：お気にいり機能に必要なテーブル
 
  - campsitesテーブル：キャンプ場閲覧等に必要な情報を保存
-  - name:キャンプ場の名前
-  - address:キャンプ場の住所
-  - latitude:キャンプ場の緯度
-  - longitude:キャンプ場の経度
+  -name:キャンプ場の名前
+  -address:キャンプ場の住所
+  -latitude:キャンプ場の緯度
+  -longitude:キャンプ場の経度
 
  - hotspringsテーブル：温泉施設閲覧等に必要な情報を保存
-  - name:温泉施設の名前
-  - address:温泉施設の住所
-  - latitude:温泉施設の緯度
-  - longitude:温泉施設の経度
-  - late_night_open:深夜営業の有無(本リリース時に実装予定のフィルター機能用)
-  - parking:駐車場の有無(本リリース時に実装予定のフィルター機能用)
-  - sauna:サウナの有無(本リリース時に実装予定のフィルター機能用)
-  - open_air_bath:露天風呂の有無(本リリース時に実装予定のフィルター機能用)
+  -name:温泉施設の名前
+  -address:温泉施設の住所
+  -latitude:温泉施設の緯度
+  -longitude:温泉施設の経度
+  -late_night_open:深夜営業の有無(本リリース時に実装予定のフィルター機能用)
+  -parking:駐車場の有無(本リリース時に実装予定のフィルター機能用)
+  -sauna:サウナの有無(本リリース時に実装予定のフィルター機能用)
+  -open_air_bath:露天風呂の有無(本リリース時に実装予定のフィルター機能用)
  
- -  campsite_hotspringsテーブル
-  - キャンプ場と温泉の中間テーブル
+ - campsite_hotspringsテーブル
+  -キャンプ場と温泉の中間テーブル
