@@ -1,0 +1,46 @@
+<div class="flex flex-col md:flex-row items-center justify-center min-h-screen space-x-0 md:space-x-10 px-4">
+  <!-- 画像セクション（大画面のみ表示） -->
+  <div class="hidden lg:block w-1/3">
+    <%= image_tag "top.PNG" %>
+  </div>
+
+  <!-- ログインフォーム -->
+  <div class="w-full max-w-sm">
+    <div class="bg-white shadow-md rounded-lg p-6 text-center">
+      <h1 class="text-2xl font-semibold mb-4">ログイン画面</h1>
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-4" }) do |f| %>
+        <!-- メール入力 -->
+        <div>
+          <%= f.email_field :email, class: "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none", placeholder: "メールアドレス" %>
+        </div>
+
+        <!-- パスワード入力 -->
+        <div>
+          <%= f.password_field :password, class: "w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:outline-none", placeholder: "パスワード" %>
+        </div>
+
+        <!-- ログインボタン -->
+        <div>
+          <%= f.submit "ログイン", class: "w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition" %>
+        </div>
+      <% end %>
+
+      <!-- フラッシュメッセージ -->
+      <% if notice %>
+        <p class="text-green-500 text-sm mt-2"><%= notice %></p>
+      <% elsif alert %>
+        <p class="text-red-500 text-sm mt-2"><%= alert %></p>
+      <% end %>
+
+      <!-- パスワードリセット -->
+      <a href="#" class="text-sm text-gray-600 hover:underline mt-4 block">パスワードを忘れた？</a>
+    </div>
+
+    <!-- サインアップリンク -->
+    <div class="bg-white shadow-md rounded-lg p-3 mt-4 text-center">
+      <p class="text-gray-600">アカウントを持っていない？</p>
+      <%= link_to "サインアップ", new_user_registration_path, class: "text-green-600 hover:underline" %>
+    </div>
+  </div>
+</div>
