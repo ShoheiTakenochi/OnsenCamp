@@ -1,29 +1,63 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="flex flex-col md:flex-row items-center justify-center min-h-screen space-x-0 md:space-x-10 px-4">
+  <!-- 画像セクション（大画面のみ表示） -->
+  <div class="hidden lg:block w-1/3">
+    <%= image_tag "top.PNG" %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+  <!-- 会員登録フォーム -->
+  <div class="w-full max-w-sm">
+    <div class="bg-white shadow-md rounded-lg p-6 text-center">
+      <h1 class="text-2xl font-mplus mb-4">会員登録</h1>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+      <% if resource.errors.any? %>
+        <div class="bg-red-100 text-red-600 p-3 rounded-md mb-4">
+          <ul>
+            <% resource.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <%= form_with model: @user, url: user_registration_path, data: { turbo: false } do |f| %>
+        <!-- 名前入力 -->
+        <div class="mb-3">
+          <%= f.text_field :username, class: "w-full p-2 border border-gray-300 font-mplus rounded-md focus:ring-2 focus:ring-[#84A08E] focus:outline-none", placeholder: "ユーザーネーム" %>
+        </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+        <!-- メール入力 -->
+        <div class="mb-3">
+          <%= f.email_field :email, class: "w-full p-2 border border-gray-300 font-mplus rounded-md focus:ring-2 focus:ring-[#84A08E] focus:outline-none", placeholder: "メールアドレス" %>
+        </div>
 
-<%= render "devise/shared/links" %>
+        <!-- パスワード入力 -->
+        <div class="mb-3">
+          <%= f.password_field :password, class: "w-full p-2 border border-gray-300 font-mplus rounded-md focus:ring-2 focus:ring-[#84A08E] focus:outline-none", placeholder: "パスワード" %>
+        </div>
+
+        <!-- パスワード確認 -->
+        <div class="mb-3">
+          <%= f.password_field :password_confirmation, class: "w-full p-2 border border-gray-300 font-mplus rounded-md focus:ring-2 focus:ring-[#84A08E] focus:outline-none", placeholder: "パスワード確認" %>
+        </div>
+
+        <!-- 登録ボタン -->
+        <div>
+          <%= f.submit "登録する", class: "w-full bg-[#84A08E] text-white font-mplus py-2 rounded-md hover:bg-[#687a6f] transition" %>
+        </div>
+      <% end %>
+
+      <!-- フラッシュメッセージ -->
+      <% if notice %>
+        <p class="text-green-500 font-mplus text-sm mt-2"><%= notice %></p>
+      <% elsif alert %>
+        <p class="text-red-500 font-mplus text-sm mt-2"><%= alert %></p>
+      <% end %>
+
+      <!-- ログインリンク -->
+      <div class="mt-4">
+        <p class="text-gray-600 font-mplus">すでにアカウントをお持ちですか？</p>
+        <%= link_to "ログイン", new_session_path(resource_name), class: "font-mplus text-[#84A08E] hover:underline" %>
+      </div>
+    </div>
+  </div>
+</div>

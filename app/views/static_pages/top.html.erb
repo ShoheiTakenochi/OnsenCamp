@@ -2,8 +2,8 @@
   <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url(<%= asset_path("top.PNG") %>);"></div>
     <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-full max-w-screen-lg">
       <div class="flex justify-center gap-16">
-        <%= link_to "Member", "new_user_registration_path", class: "btn" %>
-        <%= link_to "Login", "user_session_path", class: "btn" %>
+        <%= link_to "Member", new_user_registration_path, class: "btn" %>
+        <%= link_to "Login", user_session_path, class: "btn" %>
         <%= link_to "Find", "/", class: "btn" %>
         <%= link_to "About", "/", class: "btn" %>
       </div>
