@@ -2,7 +2,6 @@ class Users::SessionsController < Devise::SessionsController
 
   def destroy
     super
-    flash[:alert] = "ログアウトしました"
   end
 
   protected

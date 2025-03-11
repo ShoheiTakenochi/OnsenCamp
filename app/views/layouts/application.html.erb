@@ -6,16 +6,45 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true, type: "module" %>
   </head>
 
-  <body>
+  <body class="relative">
+    <div id="flash-container">
+      <% if flash[:notice] %>
+        <div id="flash-message" class="absolute top-5 left-1/2 transform -translate-x-1/2 bg-gray-500 text-white text-sm px-4 py-2 rounded-lg shadow-lg flex items-center animate-fade-in">
+          <span class="mr-2">✅</span> 
+          <%= flash[:notice] %>
+          <button id="close-flash" class="ml-2 text-white font-bold">×</button>
+        </div>
+      <% end %>
+    </div>
+
     <% if user_signed_in? %>
       <%= render 'shared/header' %>
     <% else %>
       <%= render 'shared/before_login_header' %>
     <% end %>
+
     <%= yield %>
     <%= render "shared/footer" %>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const flashMessage = document.getElementById("flash-message");
+        if (flashMessage) {
+          setTimeout(function() {
+            flashMessage?.remove();
+          }, 3000);
+        }
+
+        const closeButton = document.getElementById("close-flash");
+        if (closeButton) {
+          closeButton.addEventListener("click", function() {
+            flashMessage.remove();
+          });
+        }
+      });
+    </script>
   </body>
 </html>
