@@ -2,6 +2,7 @@
   <%= search_form_for @q, url: campsites_path, method: :get do |f| %>
     <div class="flex items-center space-x-2">
       <%= f.search_field :name_cont, placeholder:"キャンプ場名", class: "border p-2 rounded-md" %>
+      <%= f.search_field :address_cont, placeholder:"住所", class: "border p-2 rounded-md" %>
       <%= f.submit "検索", class: "bg-[#84A08E] text-white px-4 py-2 rounded-md" %>
     </div>
   <% end %>
