@@ -1,12 +1,8 @@
 class ProfileImageUploader < CarrierWave::Uploader::Base
-  
   storage :file
-  
-  include CarrierWave::MiniMagick
-  process resize_to_fit: [150, 150]
 
-  # Override the directory where uploaded files will be stored.
-  # This is a sensible default for uploaders that are meant to be mounted:
+  include CarrierWave::MiniMagick
+  process resize_to_fit: [ 150, 150 ]
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
@@ -15,5 +11,4 @@ class ProfileImageUploader < CarrierWave::Uploader::Base
   def extension_allowlist
     %w[jpg jpeg png]
   end
-  
 end

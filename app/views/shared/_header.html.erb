@@ -6,7 +6,11 @@
       <div class="flex items-center space-x-6">
         <div class="relative z-50 ">
           <button id="profile-menu-button" class="focus:outline-none">
-            <%= image_tag "default_image.png", alt: "プロフィール画像", class: "w-10 h-10 rounded-full" %>
+            <% if current_user.profile_image.present? %>
+              <%= image_tag current_user.profile_image.url, class: "rounded-full w-10 h-10 object-cover" %>
+            <% else %>
+              <%= image_tag "default_image.png", alt: "プロフィール画像", class: "w-10 h-10 rounded-full" %>
+            <% end %>
           </button>
 
           <!-- メニュー内容 -->
