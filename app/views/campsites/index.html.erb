@@ -1,0 +1,6 @@
+<div class="mb-4">
+  <%= form_with url: campsites_path, method: :get, local: true do |f| %>
+    <%= f.text_field :query, placeholder: "キャンプ場を検索", class: "border p-2 rounded-md" %>
+    <%= f.submit "検索", class: "bg-green-500 text-white px-4 py-2 rounded-md" %>
+  <% end %>
+</div>
