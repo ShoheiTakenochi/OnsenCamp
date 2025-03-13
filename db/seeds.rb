@@ -7,3 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Campsite.create!(
+  name: "富士山キャンプ場",
+  latitude: 35.3606,
+  longitude: 138.7274,
+  address: "静岡県富士宮市",
+  description: "富士山の絶景が楽しめるキャンプ場です。"
+)
