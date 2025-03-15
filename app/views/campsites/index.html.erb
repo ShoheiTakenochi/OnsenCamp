@@ -8,16 +8,28 @@
   <% end %>
 </div>
 
-<div class="mt-4">
-  <% if @campsites.any? %>
-    <ul>
-      <% @campsites.each do |campsite| %>
-        <li class="border-b py-2">
-          <%= link_to campsite.name, campsite_path(campsite), class: "text-blue-500 hover:underline" %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>該当するキャンプ場が見つかりませんでした。</p>
-  <% end %>
-</div>
+<div id="map" style="height: 600px; width: 100%;"></div>
+
+<script>
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 35.6895, lng: 139.6917 }, // 東京
+      zoom: 10,
+    });
+
+    <% @campsites.each do |campsite| %>
+      new google.maps.Marker({
+        position: { lat: <%= campsite.latitude %>, lng: <%= campsite.longitude %> },
+        map: map,
+        title: "<%= campsite.name %>"
+      });
+    <% end %>
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap`;
+    script.defer = true;
+    document.head.appendChild(script);
+  });
+</script>
