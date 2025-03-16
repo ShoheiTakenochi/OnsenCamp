@@ -17,12 +17,22 @@
       zoom: 10,
     });
 
-    <% @campsites.each do |campsite| %>
-      new google.maps.Marker({
+    <% @campsites.each_with_index do |campsite, i| %>
+      const marker<%= i %> = new google.maps.Marker({
         position: { lat: <%= campsite.latitude %>, lng: <%= campsite.longitude %> },
         map: map,
         title: "<%= campsite.name %>"
       });
+
+      const infoWindow<%= i %> = new google.maps.InfoWindow({
+        content: `<h3><%= campsite.name %></h3><p><%= campsite.address %></p>`
+      });
+
+      // マーカーをクリックしたときに吹き出しを表示
+      marker<%= i %>.addListener("click", function () {
+        infoWindow<%= i %>.open(map, marker<%= i %>);
+      });
+      
     <% end %>
   }
 
