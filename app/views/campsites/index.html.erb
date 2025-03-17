@@ -13,8 +13,8 @@
 <script>
   function initMap() {
     const map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 35.6895, lng: 139.6917 }, // 東京
-      zoom: 10,
+        center: { lat: <%= @center_lat %>, lng: <%= @center_lng %> },
+      zoom: 9,
     });
 
     <% @campsites.each_with_index do |campsite, i| %>
@@ -32,11 +32,11 @@
       marker<%= i %>.addListener("click", function () {
         infoWindow<%= i %>.open(map, marker<%= i %>);
       });
-      
+
     <% end %>
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("turbo:load", function() {
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap`;
     script.defer = true;
