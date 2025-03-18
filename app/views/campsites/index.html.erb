@@ -24,8 +24,44 @@
         title: "<%= campsite.name %>"
       });
 
+      // メイン画像のURLを取得
+			let mainImageUrl<%= i %> = "";
+			<% if campsite.photo_references.present? %>
+					try {
+						// ERB で JSON を JavaScript の文字列として正しく扱う
+						let rawPhotoReferences<%= i %> = '<%= raw campsite.photo_references %>';
+
+						let photoReferences<%= i %> = JSON.parse(rawPhotoReferences<%= i %>); // JSON文字列を配列に変換
+						if (Array.isArray(photoReferences<%= i %>)) {
+								// 配列の場合の処理 (最初の要素をメイン画像とする)
+								if (photoReferences<%= i %>.length > 0) {
+								//写真リソースの取得
+								let photoResource = photoReferences<%= i %>[0];
+								// デバッグ: photo_referencesのデータ型と値を確認
+								mainImageUrl<%= i %> = `https://places.googleapis.com/v1/${photoResource}/media?maxHeightPx=400&maxWidthPx=400&key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>`;
+								}
+						} else {
+							// 配列でない場合はエラー
+							console.error("写真データが配列ではありません:", photoReferences<%= i %>);
+						}
+					} catch (e) {
+						console.error("写真データの処理エラー:", e);
+						console.error("エラーが発生したデータ:", "<%= campsite.photo_references %>");
+					}
+			<% end %>
+
       const infoWindow<%= i %> = new google.maps.InfoWindow({
-        content: `<h3><%= campsite.name %></h3><p><%= campsite.address %></p>`
+        content: `
+          <div style="max-width: 250px;">
+            <h3><%= campsite.name %></h3>
+            <p><%= campsite.address %></p>
+            <% if campsite.photo_references.present? %>
+              <img src="${mainImageUrl<%= i %>}" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
+            <% else %>
+              <p>画像なし</p>
+            <% end %>
+          </div>
+        `
       });
 
       // マーカーをクリックしたときに吹き出しを表示

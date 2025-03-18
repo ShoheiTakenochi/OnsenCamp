@@ -674,7 +674,7 @@ namespace :fetch do
         headers = {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': api_key,
-          'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.location',
+          'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.location,places.id',
           'Accept-Language': 'ja-JP'
         }
 
@@ -711,6 +711,16 @@ namespace :fetch do
               campsite.address = place["formattedAddress"]
               campsite.latitude = place["location"]["latitude"]
               campsite.longitude = place["location"]["longitude"]
+
+							place_id = place["id"]
+							photos = fetch_photos_for_place(place_id, api_key)
+
+              if photos.any?
+                campsite.photo_references = photos.to_json
+              else
+                campsite.photo_references = nil
+              end
+
               campsite.save!
             rescue => e
               puts "⚠️ エラー: #{e.message}"
@@ -727,4 +737,42 @@ namespace :fetch do
 
     puts "✅ 全てのキャンプ場データの取得＆保存が完了しました！"
   end
+end
+
+def fetch_photos_for_place(place_id, api_key)
+	uri = URI("https://places.googleapis.com/v1/places/#{place_id}")
+	http = Net::HTTP.new(uri.host, uri.port)
+	http.use_ssl = true
+
+	headers = {
+		'Content-Type': 'application/json',
+		'X-Goog-Api-Key': api_key,
+		'X-Goog-FieldMask': 'photos'
+	}
+
+	response = http.get(uri, headers)
+
+	unless response.is_a?(Net::HTTPSuccess)
+    puts "⚠️ 写真取得APIエラー: #{response.code} #{response.message}, place_id: #{place_id}"
+    Rails.logger.error "写真取得APIエラー: #{response.code} #{response.message}, place_id: #{place_id}"
+    return []
+  end
+
+  details = JSON.parse(response.body)
+
+  if details["photos"].nil?
+    puts "⚠️ 写真データなし: place_id: #{place_id}"
+    Rails.logger.warn "写真データなし: place_id: #{place_id}"
+    return []
+  end
+
+  # `photoReference` の配列を取得（最大4枚）
+  photos = details["photos"].map { |photo| photo["name"] }
+  photos.first(4)  # 最大4枚まで取得
+
+	
+rescue => e
+    puts "⚠️ 写真取得エラー: #{e.message}, place_id: #{place_id}"
+    Rails.logger.error "写真取得エラー: #{e.message}, place_id: #{place_id}"
+    return []
 end
