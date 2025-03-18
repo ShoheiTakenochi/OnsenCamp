@@ -1,0 +1,81 @@
+<div class="mb-4 p-4">
+  <%= search_form_for @q, url: campsites_path, method: :get do |f| %>
+    <div class="flex items-center space-x-2">
+      <%= f.search_field :name_cont, placeholder:"キャンプ場名", class: "border p-2 rounded-md" %>
+      <%= f.search_field :address_cont, placeholder:"住所", class: "border p-2 rounded-md" %>
+      <%= f.submit "検索", class: "bg-[#84A08E] text-white px-4 py-2 rounded-md" %>
+    </div>
+  <% end %>
+</div>
+
+<div id="map" style="height: 600px; width: 100%;"></div>
+
+<script>
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: <%= @center_lat %>, lng: <%= @center_lng %> },
+      zoom: 9,
+    });
+
+    <% @campsites.each_with_index do |campsite, i| %>
+      const marker<%= i %> = new google.maps.Marker({
+        position: { lat: <%= campsite.latitude %>, lng: <%= campsite.longitude %> },
+        map: map,
+        title: "<%= campsite.name %>"
+      });
+
+      // メイン画像のURLを取得
+			let mainImageUrl<%= i %> = "";
+			<% if campsite.photo_references.present? %>
+					try {
+						// ERB で JSON を JavaScript の文字列として正しく扱う
+						let rawPhotoReferences<%= i %> = '<%= raw campsite.photo_references %>';
+
+						let photoReferences<%= i %> = JSON.parse(rawPhotoReferences<%= i %>); // JSON文字列を配列に変換
+						if (Array.isArray(photoReferences<%= i %>)) {
+								// 配列の場合の処理 (最初の要素をメイン画像とする)
+								if (photoReferences<%= i %>.length > 0) {
+								//写真リソースの取得
+								let photoResource = photoReferences<%= i %>[0];
+								// デバッグ: photo_referencesのデータ型と値を確認
+								mainImageUrl<%= i %> = `https://places.googleapis.com/v1/${photoResource}/media?maxHeightPx=400&maxWidthPx=400&key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>`;
+								}
+						} else {
+							// 配列でない場合はエラー
+							console.error("写真データが配列ではありません:", photoReferences<%= i %>);
+						}
+					} catch (e) {
+						console.error("写真データの処理エラー:", e);
+						console.error("エラーが発生したデータ:", "<%= campsite.photo_references %>");
+					}
+			<% end %>
+
+      const infoWindow<%= i %> = new google.maps.InfoWindow({
+        content: `
+          <div style="max-width: 250px;">
+            <h3><%= campsite.name %></h3>
+            <p><%= campsite.address %></p>
+            <% if campsite.photo_references.present? %>
+              <img src="${mainImageUrl<%= i %>}" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
+            <% else %>
+              <p>画像なし</p>
+            <% end %>
+          </div>
+        `
+      });
+
+      // マーカーをクリックしたときに吹き出しを表示
+      marker<%= i %>.addListener("click", function () {
+        infoWindow<%= i %>.open(map, marker<%= i %>);
+      });
+
+    <% end %>
+  }
+
+  document.addEventListener("turbo:load", function() {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap`;
+    script.defer = true;
+    document.head.appendChild(script);
+  });
+</script>
