@@ -8,7 +8,7 @@
   <% end %>
 </div>
 
-<div id="map" style="height: 600px; width: 100%;"></div>
+<div id="map" style="height: 800px; width: 100%;"></div>
 
 <script>
   function initMap() {
@@ -21,34 +21,18 @@
       const marker<%= i %> = new google.maps.Marker({
         position: { lat: <%= campsite.latitude %>, lng: <%= campsite.longitude %> },
         map: map,
-        title: "<%= campsite.name %>"
+        title: "<%= campsite.name %>",
+				icon: {
+            url: "<%= image_path('tent.png') %>",
+            scaledSize: new google.maps.Size(32, 32), // 画像のサイズ
+        }
       });
 
       // メイン画像のURLを取得
 			let mainImageUrl<%= i %> = "";
-			<% if campsite.photo_references.present? %>
-					try {
-						// ERB で JSON を JavaScript の文字列として正しく扱う
-						let rawPhotoReferences<%= i %> = '<%= raw campsite.photo_references %>';
-
-						let photoReferences<%= i %> = JSON.parse(rawPhotoReferences<%= i %>); // JSON文字列を配列に変換
-						if (Array.isArray(photoReferences<%= i %>)) {
-								// 配列の場合の処理 (最初の要素をメイン画像とする)
-								if (photoReferences<%= i %>.length > 0) {
-								//写真リソースの取得
-								let photoResource = photoReferences<%= i %>[0];
-								// デバッグ: photo_referencesのデータ型と値を確認
-								mainImageUrl<%= i %> = `https://places.googleapis.com/v1/${photoResource}/media?maxHeightPx=400&maxWidthPx=400&key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>`;
-								}
-						} else {
-							// 配列でない場合はエラー
-							console.error("写真データが配列ではありません:", photoReferences<%= i %>);
-						}
-					} catch (e) {
-						console.error("写真データの処理エラー:", e);
-						console.error("エラーが発生したデータ:", "<%= campsite.photo_references %>");
-					}
-			<% end %>
+			<% if campsite.photo_references.present? && campsite.photo_references.is_a?(Array) && campsite.photo_references.any? %>
+        mainImageUrl<%= i %> = `https://places.googleapis.com/v1/<%= campsite.photo_references.first %>/media?maxHeightPx=400&maxWidthPx=400&key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>`;
+      <% end %>
 
       const infoWindow<%= i %> = new google.maps.InfoWindow({
         content: `
@@ -60,6 +44,11 @@
             <% else %>
               <p>画像なし</p>
             <% end %>
+						<p>
+						  <a href="<%= campsite_path(campsite) %>" class="text-blue-500 hover:underline" target="_blank">
+							  詳細を見る
+							</a>
+						</p>
           </div>
         `
       });

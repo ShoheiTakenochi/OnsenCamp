@@ -1,0 +1,33 @@
+<div class="flex">
+  <div class="w-1/2">
+    </div>
+  <div class="w-1/2">
+    <div id="map" style="height: 800px;"></div>
+  </div>
+</div>
+
+<script>
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: <%= @center_lat %>, lng: <%= @center_lng %> },
+      zoom: 12
+    });
+
+    const marker = new google.maps.Marker({
+        position: { lat: <%= @center_lat %>, lng: <%= @center_lng %> },
+        map: map,
+        title: "<%= @campsite.name %>",
+        icon: {
+            url: "<%= image_path('tent.png') %>",
+            scaledSize: new google.maps.Size(32, 32), // 画像のサイズ
+        }
+      });
+  }
+
+  document.addEventListener("turbo:load", function() {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap`;
+    script.defer = true;
+    document.head.appendChild(script);
+  });
+</script>
