@@ -13,7 +13,7 @@
 <script>
   function initMap() {
     const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: <%= @center_lat %>, lng: <%= @center_lng %> },
+      center: { lat: <%= @center_lat %>, lng: <%= @center_lng %> },
       zoom: 9,
     });
 
@@ -22,37 +22,33 @@
         position: { lat: <%= campsite.latitude %>, lng: <%= campsite.longitude %> },
         map: map,
         title: "<%= campsite.name %>",
-				icon: {
-            url: "<%= image_path('tent.png') %>",
-            scaledSize: new google.maps.Size(32, 32), // 画像のサイズ
+        icon: {
+          url: "<%= image_path('tent.png') %>",
+          scaledSize: new google.maps.Size(32, 32), // 画像のサイズ
         }
       });
 
       // メイン画像のURLを取得
-			let mainImageUrl<%= i %> = "";
-			<% if campsite.photo_references.present? && campsite.photo_references.is_a?(Array) && campsite.photo_references.any? %>
-        mainImageUrl<%= i %> = `https://places.googleapis.com/v1/<%= campsite.photo_references.first %>/media?maxHeightPx=400&maxWidthPx=400&key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>`;
-      <% end %>
+      let mainImageUrl<%= i %> = "<%= main_image_url(campsite) || '' %>";
 
       const infoWindow<%= i %> = new google.maps.InfoWindow({
         content: `
           <div style="max-width: 250px;">
             <h3><%= campsite.name %></h3>
             <p><%= campsite.address %></p>
-            <% if campsite.photo_references.present? %>
-              <img src="${mainImageUrl<%= i %>}" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
+            <% if photo_paths_array(campsite).present? %>
+              <img src="<%= main_image_url(campsite) %>" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
             <% else %>
               <p>画像なし</p>
             <% end %>
-						<p>
-						  <a href="<%= campsite_path(campsite) %>" class="text-blue-500 hover:underline" target="_blank">
-							  詳細を見る
-							</a>
-						</p>
+            <p>
+              <a href="<%= campsite_path(campsite) %>" class="text-blue-500 hover:underline" target="_blank">
+                詳細を見る
+              </a>
+            </p>
           </div>
         `
       });
-
       // マーカーをクリックしたときに吹き出しを表示
       marker<%= i %>.addListener("click", function () {
         infoWindow<%= i %>.open(map, marker<%= i %>);
