@@ -1,5 +1,14 @@
 class CampsitesController < ApplicationController
-  def show; end
+  def show
+    @campsite = Campsite.find(params[:id])
+    if @campsite.present?
+      @center_lat = @campsite.latitude
+      @center_lng = @campsite.longitude
+    else
+      flash[:alert] = "キャンプ場が見つかりませんでした。"
+      redirect_to campsites_path
+    end
+  end
 
   def index
     @q = Campsite.ransack(params[:q])

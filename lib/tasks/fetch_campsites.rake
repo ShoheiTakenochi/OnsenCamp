@@ -1,5 +1,7 @@
 require "net/http"
 require "json"
+require "open-uri"
+require "fileutils"
 
 namespace :fetch do
   desc "Fetch and save campsites from Google Places API (New)"
@@ -713,17 +715,19 @@ namespace :fetch do
               campsite.longitude = place["location"]["longitude"]
 
               place_id = place["id"]
-              photos = fetch_photos_for_place(place_id, api_key)
+              photo_paths = fetch_and_save_photos(place_id, api_key)
 
-              if photos.any?
-                campsite.photo_references = photos.to_json
-              else
-                campsite.photo_references = nil
+              # 取得したphoto_pathsをデータベースに保存
+              campsite.photo_paths = photo_paths.any? ? photo_paths.to_json : nil
+
+              begin
+                campsite.save!
+              rescue => e
+                puts "❌ キャンプ場の保存に失敗: #{e.message}"
               end
-
-              campsite.save!
-            rescue => e
-              puts "⚠️ エラー: #{e.message}"
+            rescue StandardError => e
+              Rails.logger.error "キャンプ場保存エラー: #{e.message}, place_id: #{place_id}"
+              raise ActiveRecord::Rollback # トランザクションをロールバック
             end
           end
         end
@@ -739,7 +743,7 @@ namespace :fetch do
   end
 end
 
-def fetch_photos_for_place(place_id, api_key)
+def fetch_and_save_photos(place_id, api_key)
   uri = URI("https://places.googleapis.com/v1/places/#{place_id}")
   http = Net::HTTP.new(uri.host, uri.port)
   http.use_ssl = true
@@ -766,13 +770,30 @@ def fetch_photos_for_place(place_id, api_key)
     return []
   end
 
-  # `photoReference` の配列を取得（最大4枚）
   photos = details["photos"].map { |photo| photo["name"] }
-  photos.first(4)  # 最大4枚まで取得
+  photo_paths = []
 
+  storage_dir = Rails.root.join("public", "storage", "campsite_photos")
+  FileUtils.mkdir_p(storage_dir) unless Dir.exist?(storage_dir)
 
-rescue => e
-    puts "⚠️ 写真取得エラー: #{e.message}, place_id: #{place_id}"
-    Rails.logger.error "写真取得エラー: #{e.message}, place_id: #{place_id}"
-    []
+  photos.first(4).each_with_index do |photo_reference, index|
+    begin
+      # `photo_url` をここで定義する
+      photo_url = "https://places.googleapis.com/v1/#{photo_reference}/media?maxHeightPx=400&maxWidthPx=400&key=#{api_key}"
+      filename = "campsite_#{place_id}_#{index}.jpg"
+      file_path = storage_dir.join(filename)
+
+      File.open(file_path, "wb") do |file|
+        file.write(URI.open(photo_url).read)
+      end
+
+      photo_paths << "storage/campsite_photos/#{filename}"
+    rescue => e
+      puts "⚠️ 画像保存エラー: #{e.message}, place_id: #{place_id}"
+      puts "⚠️ 画像保存エラー: #{e.message}, photo_url: #{photo_url}"
+      Rails.logger.error "画像保存エラー: #{e.message}, place_id: #{place_id}, photo_url: #{photo_url}"
+    end
+  end
+
+  photo_paths
 end
