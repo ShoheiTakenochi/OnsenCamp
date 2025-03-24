@@ -773,8 +773,6 @@ def fetch_and_save_photos(place_id, api_key)
   photos = details["photos"].map { |photo| photo["name"] }
   photo_paths = []
 
-  puts 
-
   storage_dir = Rails.root.join("public", "storage", "campsite_photos")
   FileUtils.mkdir_p(storage_dir) unless Dir.exist?(storage_dir)
 

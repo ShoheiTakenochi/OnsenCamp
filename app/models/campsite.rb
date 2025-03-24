@@ -1,4 +1,4 @@
-require 'open-uri'
+require "open-uri"
 
 class Campsite < ApplicationRecord
   has_one_attached :photo
@@ -13,7 +13,7 @@ class Campsite < ApplicationRecord
 
   # 🔹 Ransackの検索可能属性を明示的に指定
   def self.ransackable_attributes(auth_object = nil)
-    ["id", "name", "address", "latitude", "longitude", "description", "photo_paths", "created_at", "updated_at"]
+    [ "id", "name", "address", "latitude", "longitude", "description", "photo_paths", "created_at", "updated_at" ]
   end
 
   private
