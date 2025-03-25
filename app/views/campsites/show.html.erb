@@ -42,6 +42,28 @@
         </div>
       </div>
     </div>
+    <dl class="p-4 -my-3 divide-y divide-green-200 text-sm dark:divide-gray-700">
+      <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+        <dd class="text-xl font-mplus font-bold text-gray-700 sm:col-span-2 dark:text-gray-200">
+          近隣の温浴施設
+        </dd>
+      </div>
+
+      <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-2 sm:gap-4">
+        <dd class="text-gray-700 sm:col-span-2 dark:text-gray-200">
+        <% if @nearby_hotsprings.any? %>
+          <ul>
+            <% @nearby_hotsprings.each do |data| %>
+              <dt class="text-xl font-mplus font-bold text-gray-700 sm:col-span-2 dark:text-gray-200"><%= data[:hotspring].name %>（<%= data[:distance].round(2) %> km）</dt>
+              <%= image_tag "hotspring.jpg", alt: "温泉イラスト", style: "width: 200px; height: 200px;" %>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>近隣に温浴施設はありません。</p>
+        <% end %>
+        </dd>
+      </div>
+    </dl>
   </div>
 
   <div class="w-1/2">
@@ -85,7 +107,7 @@
         zoom: 12
     });
 
-    const marker = new google.maps.Marker({
+    const camp_marker = new google.maps.Marker({
         position: { lat: <%= @center_lat %>, lng: <%= @center_lng %> },
         map: map,
         title: "<%= @campsite.name %>",
@@ -94,6 +116,52 @@
             scaledSize: new google.maps.Size(32, 32),
         }
     });
+    // ♨️ 温泉施設のマーカー
+    const hotsprings = <%= raw @hotsprings_json %>;
+
+    hotsprings.forEach(hotspring => {
+      const hotspring_marker = new google.maps.Marker({
+        position: { lat: hotspring.lat, lng: hotspring.lng },
+        map: map,
+        title: hotspring.name,
+        icon: {
+            url: "<%= image_path('onsen.png') %>",
+            scaledSize: new google.maps.Size(28, 28),
+        }
+      });
+
+      const hotspring_infoWindow = new google.maps.InfoWindow({
+        content: `
+          <div style="max-width: 200px;">
+            <h3>${hotspring.name}</h3>
+            <img src="<%= image_path('hotspring.jpg') %>" alt="温泉施設の画像" style="width: 100%; border-radius: 8px;">
+          </div>
+        `
+      });
+
+      hotspring_marker.addListener("click", function() {
+        hotspring_infoWindow.open(map, hotspring_marker);
+      });
+    });
+    
+
+    const camp_infoWindow = new google.maps.InfoWindow({
+        content: `
+          <div style="max-width: 250px;">
+            <h3><%= @campsite.name %></h3>
+            <p><%= @campsite.address %></p>
+            <% if photo_paths_array(@campsite).present? %>
+              <img src="<%= main_image_url(@campsite) %>" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
+            <% else %>
+              <p>画像なし</p>
+            <% end %>
+          </div>
+        `
+      });
+      // マーカーをクリックしたときに吹き出しを表示
+      camp_marker.addListener("click", function () {
+        camp_infoWindow.open(map, camp_marker);
+      });
 
     // メイン画像のURLを取得
     let mainImageUrl = "<%= main_image_url || '' %>";

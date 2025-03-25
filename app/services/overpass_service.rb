@@ -14,7 +14,13 @@ class OverpassService
     response = HTTParty.post(BASE_URL, body: { data: query })
 
     if response.success?
-      JSON.parse(response.body)["elements"]
+      hotsprings = JSON.parse(response.body)["elements"]
+      
+      # ハングルを含む施設名を除外
+      hotsprings.reject do |hot_spring|
+        name = hot_spring["tags"]&.fetch("name", "")
+        name.match?(/\p{Hangul}/) # ハングルが含まれているかチェック
+      end
     else
       Rails.logger.error "Overpass APIエラー: #{response.code} - #{response.message}"
       []
