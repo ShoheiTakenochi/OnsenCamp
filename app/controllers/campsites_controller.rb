@@ -18,8 +18,6 @@ class CampsitesController < ApplicationController
         lng: h.longitude
       }
     end.to_json
-    puts "@hotsprings_jsonの内容:" # デバッグ用の出力
-    puts @nearby_hotsprings.inspect # デバッグ用の出力
   end
 
   def index

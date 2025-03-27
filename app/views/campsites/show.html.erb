@@ -20,7 +20,7 @@
       </dl>
 
       <%# メイン画像 + サブ画像のレイアウト %>
-      <div class="image-gallery">
+      <div class="image-gallery shadow-md">
         <%# メイン画像 %>
         <div class="main-image">
           <% if main_image_url.present? %>
@@ -42,32 +42,32 @@
         </div>
       </div>
     </div>
-    <dl class="p-4 -my-3 divide-y divide-green-200 text-sm dark:divide-gray-700">
+    <dl class="p-4 -my-3 divide-y divide-green-200 text-sm dark:divide-gray-700 w-1/2">
       <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
         <dd class="text-xl font-mplus font-bold text-gray-700 sm:col-span-2 dark:text-gray-200">
           近隣の温浴施設
         </dd>
       </div>
 
-      <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-2 sm:gap-4">
-        <dd class="text-gray-700 sm:col-span-2 dark:text-gray-200">
+      <div class="grid grid-cols-1 gap-0 py-3 sm:grid-cols-2 sm:gap-4 mx-auto">
         <% if @nearby_hotsprings.any? %>
-          <ul>
             <% @nearby_hotsprings.each do |data| %>
-              <dt class="text-xl font-mplus font-bold text-gray-700 sm:col-span-2 dark:text-gray-200"><%= data[:hotspring].name %>（<%= data[:distance].round(2) %> km）</dt>
-              <%= image_tag "hotspring.jpg", alt: "温泉イラスト", style: "width: 200px; height: 200px;" %>
+              <div class="p-4 rounded-lg shadow-md">
+                <dt class="text-xl font-mplus font-bold text-gray-700 dark:text-gray-200">
+                  <%= data[:hotspring].name %>（<%= data[:distance].round(2) %> km）
+                </dt>
+                <%= image_tag "hotspring.jpg", alt: "温泉イラスト", class: "w-full h-40 object-cover rounded-md mt-2" %>
+              </div>
             <% end %>
-          </ul>
         <% else %>
-          <p>近隣に温浴施設はありません。</p>
+          <p>近隣(10km圏内)に温浴施設はありません。</p>
         <% end %>
-        </dd>
       </div>
     </dl>
   </div>
 
   <div class="w-1/2">
-    <div id="map" style="height: 800px;"></div>
+    <div id="map" style="height: 1000px;"></div>
   </div>
 </div>
 
@@ -76,7 +76,7 @@
     display: grid;
     grid-template-columns: 70% 30%;
     gap: 10px;
-    align-items: over;
+    align-items: center;
   }
 
   .main-image img {
