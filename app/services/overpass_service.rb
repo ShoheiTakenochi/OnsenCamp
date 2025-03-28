@@ -1,5 +1,5 @@
-require 'httparty'
-require 'json'
+require "httparty"
+require "json"
 
 class OverpassService
   BASE_URL = "https://overpass-api.de/api/interpreter"
@@ -15,7 +15,7 @@ class OverpassService
 
     if response.success?
       hotsprings = JSON.parse(response.body)["elements"]
-      
+
       # ハングルを含む施設名を除外
       hotsprings.reject do |hot_spring|
         name = hot_spring["tags"]&.fetch("name", "")
