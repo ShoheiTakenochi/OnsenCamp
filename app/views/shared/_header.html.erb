@@ -7,9 +7,9 @@
         <div class="relative z-50 ">
           <button id="profile-menu-button" class="focus:outline-none">
             <% if current_user.profile_image.present? %>
-              <%= image_tag current_user.profile_image.url, class: "rounded-full w-10 h-10 object-cover" %>
+              <%= image_tag current_user.profile_image.url, class: "rounded-full w-10 h-10 object-cover cursor-pointer" %>
             <% else %>
-              <%= image_tag "default_image.png", alt: "プロフィール画像", class: "w-10 h-10 rounded-full" %>
+              <%= image_tag "default_image.png", alt: "プロフィール画像", class: "w-10 h-10 rounded-full cursor-pointer" %>
             <% end %>
           </button>
 

@@ -3,7 +3,7 @@
     <div class="flex items-center space-x-2">
       <%= f.search_field :name_cont, placeholder:"キャンプ場名", class: "border p-2 rounded-md" %>
       <%= f.search_field :address_cont, placeholder:"住所", class: "border p-2 rounded-md" %>
-      <%= f.submit "検索", class: "bg-[#84A08E] text-white px-4 py-2 rounded-md" %>
+      <%= f.submit "検索", class: "bg-[#84A08E] text-white px-4 py-2 rounded-md cursor-pointer" %>
     </div>
   <% end %>
 </div>
@@ -42,9 +42,29 @@
               <p>画像なし</p>
             <% end %>
             <p>
-              <a href="<%= campsite_path(campsite) %>" class="text-blue-500 hover:underline" target="_blank">
-                詳細を見る
+              <a
+                class="inline-flex items-center gap-2 rounded-sm border border-[#84A08E] bg-[#84A08E] px-8 py-3 text-white hover:bg-transparent hover:text-[#84A08E] focus:ring-3 focus:outline-hidden"
+                href="<%= campsite_path(campsite) %>"
+                  target="_blank"
+              >
+                <span class="text-sm font-medium"> 詳細を見る </span>
+
+                <svg
+                  class="size-5 shadow-sm rtl:rotate-180"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
               </a>
+
             </p>
           </div>
         `

@@ -8,6 +8,16 @@ class CampsitesController < ApplicationController
       flash[:alert] = "キャンプ場が見つかりませんでした。"
       redirect_to campsites_path
     end
+    @nearby_hotsprings = @campsite.nearby_hotsprings
+
+    @hotsprings_json = @nearby_hotsprings.map do |hotspring|
+      h = hotspring[:hotspring] # `hotspring` キーの中身を取得
+      {
+        name: h.name, # `Hotspring` オブジェクトのデータを参照
+        lat: h.latitude,
+        lng: h.longitude
+      }
+    end.to_json
   end
 
   def index
