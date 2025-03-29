@@ -29,17 +29,17 @@
       });
 
       // メイン画像のURLを取得
-      let mainImageUrl<%= i %> = "<%= main_image_url(campsite) || '' %>";
+      let mainImageUrl<%= i %> = "<%= campsite.images.attached? ? url_for(campsite.images.first) : '' %>";
 
       const infoWindow<%= i %> = new google.maps.InfoWindow({
         content: `
           <div style="max-width: 250px;">
             <h3><%= campsite.name %></h3>
             <p><%= campsite.address %></p>
-            <% if photo_paths_array(campsite).present? %>
-              <img src="<%= main_image_url(campsite) %>" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
+            <% if campsite.images.attached? %>
+              <img src="<%= url_for(campsite.images.first) %>" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
             <% else %>
-              <p>画像なし</p>
+              <%= image_tag "default_campsite.PNG", alt: "キャンプ場のサブ画像", style: "width: 100%; border-radius: 8px;" %>
             <% end %>
             <p>
               <a

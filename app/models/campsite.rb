@@ -2,7 +2,7 @@ require "open-uri"
 
 class Campsite < ApplicationRecord
   include DistanceCalculatable
-  has_one_attached :photo
+  has_many_attached :images
   has_many :hotsprings, through: :hotspring_campsite_relationships
 
   before_save :fetch_photo_url, if: -> { photo_paths.blank? && photo_paths.present? }
