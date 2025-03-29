@@ -1,11 +1,11 @@
 require "open-uri"
-require 'aws-sdk-s3' # AWS SDKを追加
+require "aws-sdk-s3" # AWS SDKを追加
 
 namespace :fetch do
   desc "Migrate existing campsite images from local storage to Active Storage on S3"
-  task :migrate_images_to_s3 => :environment do
-    s3_bucket_name = ENV['S3_BUCKET_NAME']
-    s3_region = ENV['AWS_REGION']
+  task migrate_images_to_s3: :environment do
+    s3_bucket_name = ENV["S3_BUCKET_NAME"]
+    s3_region = ENV["AWS_REGION"]
     s3_client = Aws::S3::Client.new(region: s3_region)
 
     Campsite.find_each do |campsite|
@@ -14,17 +14,17 @@ namespace :fetch do
       photo_paths = JSON.parse(campsite.photo_paths) rescue []
 
       photo_paths.each do |path|
-        s3_key = path.sub('public/', '').sub('storage/', '') # S3パスに合わせて修正
+        s3_key = path.sub("public/", "").sub("storage/", "") # S3パスに合わせて修正
         s3_url = "https://#{s3_bucket_name}.s3.#{s3_region}.amazonaws.com/#{s3_key}"
         # 画像がS3に存在するか確認
         begin
           s3_client.head_object(bucket: s3_bucket_name, key: s3_key)
-          
+
           # Active Storage の attach を S3 参照として登録
           blob = ActiveStorage::Blob.create_before_direct_upload!(
             key: s3_key,
             filename: File.basename(path),
-            content_type: 'image/jpeg',
+            content_type: "image/jpeg",
             byte_size: 1, # ダミーのサイズ（実データは保存しない）
             checksum: Base64.encode64(Digest::MD5.digest("")),
             service_name: "amazon"
