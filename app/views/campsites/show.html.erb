@@ -1,5 +1,4 @@
 <% main_image_url = main_image_url(@campsite) %>
-<% sub_image_urls = sub_image_urls(@campsite) %>
 
 <div class="flex">
   <div class="w-1/2">
@@ -38,21 +37,21 @@
       <div class="image-gallery shadow-md">
         <%# メイン画像 %>
         <div class="main-image">
-          <% if main_image_url.present? %>
-            <img src="<%= main_image_url %>" alt="キャンプ場の画像">
+          <% if @campsite.images.attached? %>
+            <%= image_tag url_for(@campsite.images.first), alt: "キャンプ場の画像" %>
           <% else %>
-            <p>画像なし</p>
+            <%= image_tag "default_campsite.PNG", alt: "キャンプ場のデフォルト画像" %>
           <% end %>
         </div>
 
         <%# サブ画像 %>
         <div class="sub-images">
-          <% if sub_image_urls.present? %>
-            <% sub_image_urls.each do |sub_image_url| %>
-              <img src="<%= url_for("/#{sub_image_url}") %>" alt="キャンプ場のサブ画像" style="width: 200px; height: 140px;">
+          <% if @campsite.images.attached? && @campsite.images.count > 1 %>
+            <% @campsite.images.drop(1).each do |image| %>
+              <%= image_tag url_for(image), alt: "キャンプ場のサブ画像", style: "width: 200px; height: 140px;" %>
             <% end %>
           <% else %>
-            <p>サブ画像なし</p>
+            <%= image_tag "default_campsite_sub.JPG", alt: "キャンプ場のサブ画像", style: "width: 200px; height: 140px;" %>
           <% end %>
         </div>
       </div>
@@ -168,7 +167,7 @@
             <% if photo_paths_array(@campsite).present? %>
               <img src="<%= main_image_url(@campsite) %>" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
             <% else %>
-              <p>画像なし</p>
+              <%= image_tag "default_campsite.PNG", alt: "キャンプ場のサブ画像", style: "width: 100%; border-radius: 8px;" %>
             <% end %>
           </div>
         `
@@ -177,9 +176,6 @@
       camp_marker.addListener("click", function () {
         camp_infoWindow.open(map, camp_marker);
       });
-
-    // メイン画像のURLを取得
-    let mainImageUrl = "<%= main_image_url || '' %>";
   }
 
   document.addEventListener("turbo:load", function() {

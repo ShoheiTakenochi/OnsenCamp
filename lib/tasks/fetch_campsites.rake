@@ -771,29 +771,20 @@ def fetch_and_save_photos(place_id, api_key)
   end
 
   photos = details["photos"].map { |photo| photo["name"] }
-  photo_paths = []
-
-  storage_dir = Rails.root.join("public", "storage", "campsite_photos")
-  FileUtils.mkdir_p(storage_dir) unless Dir.exist?(storage_dir)
 
   photos.first(4).each_with_index do |photo_reference, index|
     begin
       # `photo_url` をここで定義する
       photo_url = "https://places.googleapis.com/v1/#{photo_reference}/media?maxHeightPx=400&maxWidthPx=400&key=#{api_key}"
       filename = "campsite_#{place_id}_#{index}.jpg"
-      file_path = storage_dir.join(filename)
 
-      File.open(file_path, "wb") do |file|
-        file.write(URI.open(photo_url).read)
-      end
+      file = URI.open(photo_url) # 画像を取得
+      campsite.photo.attach(io: file, filename: filename, content_type: "image/jpeg") # S3にアップロード
 
-      photo_paths << "storage/campsite_photos/#{filename}"
     rescue => e
       puts "⚠️ 画像保存エラー: #{e.message}, place_id: #{place_id}"
       puts "⚠️ 画像保存エラー: #{e.message}, photo_url: #{photo_url}"
       Rails.logger.error "画像保存エラー: #{e.message}, place_id: #{place_id}, photo_url: #{photo_url}"
     end
   end
-
-  photo_paths
 end
