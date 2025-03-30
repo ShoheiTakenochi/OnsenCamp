@@ -74,7 +74,7 @@ https://www.figma.com/design/EmxAvAyLwdunERz1j7JoFt/OnsenCamp?node-id=0-1&p=f&t=
 
 ## ER図
 
-[![Image from Gyazo](https://i.gyazo.com/7b9990af7bd43848048fdef56c7ee684.png)](https://gyazo.com/7b9990af7bd43848048fdef56c7ee684)
+[![Image from Gyazo](https://i.gyazo.com/ad69cffe5b921fd43c01e1e77fcbf887.png)](https://gyazo.com/ad69cffe5b921fd43c01e1e77fcbf887)
 
 - 各テーブルの解説
  - usersテーブル：基本的なユーザー情報用のテーブル
