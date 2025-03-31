@@ -11,16 +11,18 @@
   </head>
 
   <body class="relative">
-    <div id="flash-container">
-      <% if flash[:notice] %>
+    <!-- 🚀 Turbo Stream に対応した Flash メッセージ -->
+    <turbo-frame id="flash">
+      <% if flash[:notice] || flash[:alert] %>
         <div id="flash-message" class="absolute top-5 left-1/2 transform -translate-x-1/2 bg-gray-500 text-white text-sm px-4 py-2 rounded-lg shadow-lg flex items-center animate-fade-in">
           <span class="mr-2">✅</span> 
-          <%= flash[:notice] %>
+          <%= flash[:notice] || flash[:alert] %>
           <button id="close-flash" class="ml-2 text-white font-bold">×</button>
         </div>
       <% end %>
-    </div>
+    </turbo-frame>
 
+    <!-- ヘッダーのレンダリング -->
     <% if user_signed_in? %>
       <%= render 'shared/header' %>
     <% else %>
@@ -28,23 +30,31 @@
     <% end %>
 
     <%= yield %>
+
+    <!-- フッターのレンダリング -->
     <%= render "shared/footer" %>
 
+    <!-- 🚀 Turbo Stream に対応した Flash メッセージ用のスクリプト -->
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        const flashMessage = document.getElementById("flash-message");
-        if (flashMessage) {
-          setTimeout(function() {
-            flashMessage?.remove();
-          }, 3000);
+      document.addEventListener("turbo:load", function() {
+        function removeFlashMessage() {
+          const flashMessage = document.getElementById("flash-message");
+          if (flashMessage) {
+            flashMessage.style.transition = "opacity 0.5s ease-out";
+            flashMessage.style.opacity = "0";
+            setTimeout(() => flashMessage.remove(), 500); // アニメーション後に削除
+          }
         }
 
-        const closeButton = document.getElementById("close-flash");
-        if (closeButton) {
-          closeButton.addEventListener("click", function() {
-            flashMessage.remove();
-          });
-        }
+        // 3秒後に自動で消える
+        setTimeout(removeFlashMessage, 3000);
+
+        // ×ボタンを押したときに消える
+        document.addEventListener("click", function(event) {
+          if (event.target && event.target.id === "close-flash") {
+            removeFlashMessage();
+          }
+        });
       });
     </script>
   </body>

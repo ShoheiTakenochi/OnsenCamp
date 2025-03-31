@@ -1,0 +1,13 @@
+<%= turbo_stream.replace "favorite-button-for-campsite-#{@campsite.id}" do %>
+  <%= render 'campsites/favorite', campsite: @campsite %>
+<% end %>
+
+<turbo-stream action="replace" target="flash">
+  <template>
+    <div id="flash-message" class="absolute top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-sm px-4 py-2 rounded-lg shadow-lg flex items-center animate-fade-in">
+      <span class="mr-2">✅</span> 
+      お気に入りに追加しました。
+      <button id="close-flash" class="ml-2 text-white font-bold">×</button>
+    </div>
+  </template>
+</turbo-stream>

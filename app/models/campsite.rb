@@ -4,6 +4,8 @@ class Campsite < ApplicationRecord
   include DistanceCalculatable
   has_many_attached :images
   has_many :hotsprings, through: :hotspring_campsite_relationships
+  has_many :favorite, dependent: :destroy
+  has_many :favorited_by_users, through: :favorites, source: :user
 
   before_save :fetch_photo_url, if: -> { photo_paths.blank? && photo_paths.present? }
 
