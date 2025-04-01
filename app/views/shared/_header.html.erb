@@ -1,6 +1,6 @@
 <header class="bg-[#84A08E]">
   <nav class="navbar-expand-lg navigation navbar-light flex items-center justify-between px-4 py-2">
-      <%= link_to root_path do %>
+      <%= link_to root_path, data: { turbo: false } do %>
         <%= image_tag "logo.PNG", alt: "ロゴ", class: "h-12" %>
       <% end %>
       <div class="flex items-center space-x-6">
@@ -26,7 +26,7 @@
 
 <!-- 🔻 JavaScript（ドロップダウン開閉処理） -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("turbo:load", function () {
     const profileButton = document.getElementById("profile-menu-button");
     const profileMenu = document.getElementById("profile-menu");
 
