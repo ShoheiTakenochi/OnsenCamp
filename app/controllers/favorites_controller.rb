@@ -25,6 +25,6 @@ class FavoritesController < ApplicationController
   private
 
   def set_campsite
-    @campsite = Campsite.find_by(id: params[:campsite_id])
+    @campsite = Campsite.find(params[:campsite_id])
   end
 end
