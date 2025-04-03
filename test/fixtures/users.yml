@@ -4,8 +4,12 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  email: one@example.com
+  # password_digest: <%= BCrypt::Password.create('secret') %> # この行を削除
+  encrypted_password: 'secret' # テストで使用するためのプレーンなパスワード (devise が処理します)
+
+two:
+  email: two@example.com
+  # password_digest: <%= BCrypt::Password.create('password') %> # この行を削除
+  encrypted_password: 'password' # テストで使用するためのプレーンなパスワード (devise が処理します)

@@ -1,6 +1,6 @@
 <header class="bg-[#84A08E]">
   <nav class="navbar-expand-lg navigation navbar-light flex items-center justify-between px-4 py-2">
-      <%= link_to root_path do %>
+      <%= link_to root_path, data: { turbo: false } do %>
         <%= image_tag "logo.PNG", alt: "ロゴ", class: "h-12" %>
       <% end %>
       <div class="flex items-center space-x-6">
@@ -15,7 +15,7 @@
 
           <!-- メニュー内容 -->
           <div id="profile-menu" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-sm py-2 hidden">
-            <%= link_to "お気にいり", "/", class: "block px-4 py-2 text-[#84A08E] hover:bg-gray-100" %>
+            <%= link_to "お気にいり", favorites_path, class: "block px-4 py-2 text-[#84A08E] hover:bg-gray-100" %>
             <%= link_to "ユーザー設定", edit_user_registration_path, class: "block px-4 py-2 text-[#84A08E] hover:bg-gray-100" %>
             <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-[#84A08E] hover:bg-gray-100" %>
           </div>
@@ -26,7 +26,7 @@
 
 <!-- 🔻 JavaScript（ドロップダウン開閉処理） -->
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("turbo:load", function () {
     const profileButton = document.getElementById("profile-menu-button");
     const profileMenu = document.getElementById("profile-menu");
 
