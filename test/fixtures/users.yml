@@ -6,8 +6,10 @@
 #
 one:
   email: one@example.com
-  password_digest: <%= BCrypt::Password.create('secret') %> # 必要に応じて
+  # password_digest: <%= BCrypt::Password.create('secret') %> # この行を削除
+  password: 'secret' # テストで使用するためのプレーンなパスワード (devise が処理します)
 
 two:
   email: two@example.com
-  password_digest: <%= BCrypt::Password.create('password') %> # 必要に応じて
+  # password_digest: <%= BCrypt::Password.create('password') %> # この行を削除
+  password: 'password' # テストで使用するためのプレーンなパスワード (devise が処理します)
