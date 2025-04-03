@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :campsites, only: [ :index, :show ] do
     resource :favorite, only: [ :create, :destroy ]
-    get 'favorites', to: 'favorites#index'
+    get "favorites", to: "favorites#index"
   end
 
   resources :favorites, only: [ :index ]

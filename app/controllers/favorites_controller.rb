@@ -10,7 +10,7 @@ class FavoritesController < ApplicationController
     current_user.add_favorite(@campsite)
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to @campsite, notice: 'お気に入りに追加しました。' }
+      format.html { redirect_to @campsite, notice: "お気に入りに追加しました。" }
     end
   end
 
@@ -18,7 +18,7 @@ class FavoritesController < ApplicationController
     current_user.remove_favorite(@campsite)
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to @campsite, notice: 'お気に入りを解除しました。' }
+      format.html { redirect_to @campsite, notice: "お気に入りを解除しました。" }
     end
   end
 
