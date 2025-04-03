@@ -1,13 +1,19 @@
 require "test_helper"
 
 class FavoritesControllerTest < ActionDispatch::IntegrationTest
-  test "should get create" do
-    get favorites_create_url
-    assert_response :success
+  setup do
+    @user = users(:one) # 例: テストユーザーをセットアップ
+    @campsite = campsites(:one) # 例: テストキャンプ場をセットアップ
+    sign_in @user # deviseのヘルパーメソッドでログイン
   end
 
-  test "should get destroy" do
-    get favorites_destroy_url
-    assert_response :success
+  test "should post create" do
+    post campsite_favorite_path(@campsite)
+    assert_response :redirect # または :success など、期待されるレスポンス
+  end
+
+  test "should delete destroy" do
+    delete campsite_favorite_path(@campsite)
+    assert_response :redirect # または :success など、期待されるレスポンス
   end
 end
