@@ -4,9 +4,9 @@ class User < ApplicationRecord
   has_many :favorite_campsites, through: :favorites, source: :campsite
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable
 
-  #validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, length: { maximum: 20 }
 
   def favorite?(campsite)
