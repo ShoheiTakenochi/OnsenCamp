@@ -2,8 +2,8 @@
 
 one:
   user: one
-  campsite: one
+  campsite_id: 320 # campsites.yml の one の id
 
 two:
   user: two
-  campsite: two
+  campsite_id: 115 # campsites.yml の two の id
