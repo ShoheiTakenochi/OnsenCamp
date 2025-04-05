@@ -1,4 +1,9 @@
 <% main_image_url = main_image_url(@campsite) %>
+<% content_for :title, @campsite.name %>
+<% content_for :description, "#{@campsite.name}の詳細ページです。" %>
+<% content_for :og_title, @campsite.name %>
+<% content_for :og_description, "#{@campsite.name}の詳細情報を掲載しています。" %>
+<% content_for :og_image, @campsite.images.attached? ? url_for(@campsite.images.first) : image_url('default_ogp.png') %>
 
 <div class="flex">
   <div class="w-1/2">
