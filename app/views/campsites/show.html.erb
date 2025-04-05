@@ -3,7 +3,7 @@
 <% content_for :description, "#{@campsite.name}の詳細ページです。" %>
 <% content_for :og_title, @campsite.name %>
 <% content_for :og_description, "#{@campsite.name}の詳細情報を掲載しています。" %>
-<% content_for :og_image, @campsite.images.attached? ? url_for(@campsite.images.first) : image_url('default_ogp.png') %>
+<% content_for :og_image, @campsite.images.attached? ? url_for(@campsite.images.first) : image_url('default_campsite.PNG') %>
 
 <div class="flex">
   <div class="w-1/2">
