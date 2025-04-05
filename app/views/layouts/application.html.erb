@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OnsenCamp</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title><%= content_for?(:title) ? yield(:title) : "OnsenCamp" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'キャンプ場と温泉施設を組み合わせて検索できるサービスです。' %>">
+
+    <!-- OGP -->
+    <meta property="og:title" content="<%= content_for?(:og_title) ? yield(:og_title) : 'OnsenCamp' %>" />
+    <meta property="og:description" content="<%= content_for?(:og_description) ? yield(:og_description) : 'キャンプ場と温泉を組み合わせて検索できるサービス' %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:image" content="<%= content_for?(:og_image) ? yield(:og_image) : image_url('default_ogp.png') %>" />
+    <meta property="og:site_name" content="OnsenCamp" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
