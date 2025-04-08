@@ -28,9 +28,6 @@
         }
       });
 
-      // メイン画像のURLを取得
-      let mainImageUrl<%= i %> = "<%= campsite.images.attached? ? url_for(campsite.images.first) : '' %>";
-
       const infoWindow<%= i %> = new google.maps.InfoWindow({
         content: `
           <div style="max-width: 250px;">

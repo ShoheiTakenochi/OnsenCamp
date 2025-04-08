@@ -64,6 +64,34 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_content "アカウント情報が更新されました。"
         expect(current_path).to eq root_path
       end
+
+      it "メールアドレスが未入力の場合エラーになる" do
+        login(registereduser)
+        visit edit_user_registration_path
+        fill_in "メールアドレス", with: ""
+        fill_in "現在のパスワード（必須）", with: "password"
+        click_button "commit"
+        expect(page).to have_content "Emailは不正な値です"
+        expect(current_path).to eq "/users"
+      end
+
+      it "登録済みのメールアドレスを入力する " do
+        login(registereduser)
+        visit edit_user_registration_path
+        fill_in "メールアドレス", with: edituser.email
+        fill_in "現在のパスワード（必須）", with: "password"
+        click_button "commit"
+        expect(page).to have_content "Emailはすでに存在します"
+        expect(current_path).to eq "/users"
+      end
+    end
+    context "お気にいりページ遷移" do
+      it "お気にいりページに遷移する" do
+        login(registereduser)
+        visit favorites_path
+        expect(current_path).to eq favorites_path
+        expect(page).to have_content "Favorite"
+      end
     end
   end
 end
