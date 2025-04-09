@@ -11,7 +11,7 @@ RSpec.describe Favorite, type: :model do
       favorite = build(:favorite, user: nil)
       expect(favorite).to be_invalid
     end
-    
+
     it "campsiteがnilの場合は無効であること" do
       favorite = build(:favorite, campsite: nil)
       expect(favorite).to be_invalid

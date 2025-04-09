@@ -19,7 +19,7 @@ RSpec.describe "UserSessions", type: :system do
       expect(page).to have_content "サインインしました。"
       expect(current_path).to eq root_path
     end
-  
+
     it "パスワードが間違っているとログインできない" do
       visit new_user_session_path
       fill_in "メールアドレス", with: registereduser.email

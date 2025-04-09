@@ -5,6 +5,6 @@ FactoryBot.define do
     latitude { 43.06417 }
     longitude { 141.34694 }
     description { "自然豊かなキャンプ場です。" }
-    photo_paths { ["sample1.jpg", "sample2.jpg"] }
+    photo_paths { [ "sample1.jpg", "sample2.jpg" ] }
   end
 end

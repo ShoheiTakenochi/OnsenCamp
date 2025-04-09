@@ -46,7 +46,7 @@ RSpec.describe "Users", type: :system do
       end
 
       it "マイページ遷移" do
-        visit edit_user_registration_path 
+        visit edit_user_registration_path
         expect(page).to have_content "サインインまたは登録が必要です。"
         expect(current_path).to eq user_session_path
       end

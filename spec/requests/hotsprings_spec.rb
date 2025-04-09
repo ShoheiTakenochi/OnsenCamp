@@ -13,4 +13,4 @@ RSpec.describe "hotsprings", type: :request do
       expect(response.body).not_to include("遠すぎの湯")
     end
   end
-end 
+end
