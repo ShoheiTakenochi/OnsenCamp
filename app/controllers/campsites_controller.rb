@@ -22,7 +22,7 @@ class CampsitesController < ApplicationController
 
   def index
     @q = Campsite.ransack(params[:q])
-    @campsites = @q.result(distinct: true)
+    @campsites = @q.result(distinct: true).includes(images_attachments: :blob)
 
     if params[:q] && params[:q][:address_cont].present?
       address = params[:q][:address_cont]
