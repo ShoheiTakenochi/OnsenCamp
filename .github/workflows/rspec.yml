@@ -46,6 +46,12 @@ jobs:
           bundle install
           yarn install --check-files || true
 
+      - name: Install JavaScript dependencies
+        run: yarn install
+
+      - name: Build JavaScript
+        run: ./bin/build
+
       - name: Set up DB
         run: |
           bin/rails db:create
