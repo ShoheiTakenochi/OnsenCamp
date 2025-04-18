@@ -34,7 +34,7 @@
             <h3><%= campsite.name %></h3>
             <p><%= campsite.address %></p>
             <% if campsite.images.attached? %>
-              <img src="<%= url_for(campsite.images.first) %>" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
+              <%= image_tag "default_campsite.PNG", alt: "キャンプ場のサブ画像", style: "width: 100%; border-radius: 8px;" %>
             <% else %>
               <%= image_tag "default_campsite.PNG", alt: "キャンプ場のサブ画像", style: "width: 100%; border-radius: 8px;" %>
             <% end %>
