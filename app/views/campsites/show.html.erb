@@ -24,25 +24,14 @@
         </div>
       </dl>
 
-      <%# メイン画像 + サブ画像のレイアウト %>
+      <%# メイン画像 %>
       <div class="image-gallery shadow-md">
         <%# メイン画像 %>
         <div class="main-image">
           <% if @campsite.images.attached? %>
-            <%= image_tag url_for(@campsite.images.first), alt: "キャンプ場の画像" %>
-          <% else %>
             <%= image_tag "default_campsite.PNG", alt: "キャンプ場のデフォルト画像" %>
-          <% end %>
-        </div>
-
-        <%# サブ画像 %>
-        <div class="sub-images">
-          <% if @campsite.images.attached? && @campsite.images.count > 1 %>
-            <% @campsite.images.drop(1).each do |image| %>
-              <%= image_tag url_for(image), alt: "キャンプ場のサブ画像", style: "width: 200px; height: 140px;" %>
-            <% end %>
-          <% else %>
-            <%= image_tag "default_campsite_sub.JPG", alt: "キャンプ場のサブ画像", style: "width: 200px; height: 140px;" %>
+            <% else %>
+            <%= image_tag "default_campsite.PNG", alt: "キャンプ場のデフォルト画像" %>
           <% end %>
         </div>
       </div>
