@@ -1,0 +1,107 @@
+<div class="max-w-screen-md mx-auto flex items-center justify-center">
+  <div class="bg-base-100 rounded-lg shadow-md p-4 md:p-8 m-3 md:m-5">
+    <h1 class="text-xl font-bold text-center mb-4">OnsenCampの使い方</h1>
+      <div class="m-3 md:m-5">
+        <div>
+          <div class="divide-y divide-dotted divide-gray-300 space-y-8 ">
+            <!-- キャンプ場を探す -->
+            <div>
+              <h3 class="font-bold text-xl md:text-xl m-1 md:m-3">キャンプ場を探す</h3>
+              <div class="flex flex-col md:flex-row gap-4 m-3">
+                <div class="md:flex-1 text-lg md:text-xl space-y-2">
+                  <p>トップページまたは検索フォームから、キャンプ場の名称や住所で検索できます。</p>
+                  <p>気になるエリアのキャンプ場を簡単に見つけられます。</p>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/search.gif", class: "w-full h-full object-cover", alt: "キャンプ場のデフォルト画像" %>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/search-2.gif", class: "w-full h-full object-cover", alt: "キャンプ場のデフォルト画像" %>
+                </div>
+              </div>
+            </div>
+
+            <!-- 検索結果を確認する -->
+            <div>
+              <h3 class="font-bold text-xl md:text-xl m-1 md:m-3">検索結果を確認する</h3>
+              <div class="flex flex-col md:flex-row gap-4 m-3">
+                <div class="md:flex-1 text-lg md:text-xl space-y-2">
+                  <p>検索結果は地図上にキャンプ場マークで表示されます。</p>
+                  <p>各キャンプ場の簡易情報（名称・住所）を確認できます。</p>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/results-2.png", class: "w-full h-full object-cover", alt: "検索結果一覧" %>
+                </div>
+              </div>
+            </div>
+
+            <!-- キャンプ場の詳細を見る -->
+            <div>
+              <h3 class="font-bold text-xl md:text-xl m-1 md:m-3">キャンプ場の詳細を見る</h3>
+              <div class="flex flex-col md:flex-row gap-4 m-3">
+                <div class="md:flex-1 text-lg md:text-xl space-y-2">
+                  <p>検索結果からキャンプ場を選択すると、詳細情報ページが開きます。</p>
+                  <p>キャンプ場の住所・画像・10km圏内の温泉施設情報もここで確認できます。</p>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/campsite_detail.png", class: "w-full h-full object-cover", alt: "キャンプ場詳細" %>
+                </div>
+              </div>
+            </div>
+
+            <!-- お気にいりに追加する -->
+            <div>
+              <h3 class="font-bold text-xl md:text-xl m-1 md:m-3">お気にいりに追加する</h3>
+              <div class="flex flex-col md:flex-row gap-4 m-3">
+                <div class="md:flex-1 text-lg md:text-xl space-y-2">
+                  <p>詳細ページの☆Favoriteボタンを押すと、そのキャンプ場をお気にいりに登録できます。</p>
+                  <p>再度★Unfavoriteボタンを押すと、お気にいり解除できます</p>
+                  <p>気になるキャンプ場をあとでまとめて見返すのに便利です。</p>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/favorite.gif", class: "w-full h-full object-cover", alt: "お気にいり追加" %>
+                </div>
+              </div>
+            </div>
+
+            <!-- お気にいり一覧を確認する -->
+            <div>
+              <h3 class="font-bold text-xl md:text-xl m-1 md:m-3">お気にいり一覧を確認する</h3>
+              <div class="flex flex-col md:flex-row gap-4 m-3">
+                <div class="md:flex-1 text-lg md:text-xl space-y-2">
+                  <p>マイページでは、自分がお気にいり登録したキャンプ場を一覧で確認できます。</p>
+                  <p>行きたい場所を整理しておくのに役立ちます。</p>
+                  <p>ここからもお気にいりの解除は可能です。</p>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/favorite_list.gif", class: "w-full h-full object-cover", alt: "お気にいり一覧画面" %>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/favorite_list-2.png", class: "w-full h-full object-cover", alt: "お気にいり一覧画面" %>
+                </div>
+              </div>
+            </div>
+
+            <!-- 会員登録とログイン -->
+            <div>
+              <h3 class="font-bold text-xl md:text-xl m-1 md:m-3">会員登録とログイン</h3>
+              <div class="flex flex-col md:flex-row gap-4 m-3">
+                <div class="md:flex-1 text-lg md:text-xl space-y-2">
+                  <p>お気にいり機能を利用するには、会員登録とログインが必要です。</p>
+                  <p>メールアドレスとパスワードで簡単に登録できます。</p>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/member.gif", class: "w-full h-full object-cover", alt: "会員登録" %>
+                </div>
+                <div class="w-40 md:w-64 h-32 md:h-40 overflow-hidden rounded shadow mx-auto md:mx-0">
+                  <%= image_tag "howto/login.gif", class: "w-full h-full object-cover", alt: "ログイン" %>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
