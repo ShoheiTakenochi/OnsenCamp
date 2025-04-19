@@ -14,7 +14,7 @@
       <% @campsites.each do |campsite| %>
         <div class="p-4 rounded-lg shadow-md bg-white">
           <% if campsite.images.attached? %>
-            <%= image_tag url_for(campsite.images.first), alt: "キャンプ場の画像", class: "w-full h-[450px] object-cover rounded-lg" %>
+            <%= image_tag "default_campsite.PNG", alt: "キャンプ場のデフォルト画像", class: "w-full h-[350px] object-cover rounded-lg" %>
           <% else %>
             <%= image_tag "default_campsite.PNG", alt: "キャンプ場のデフォルト画像", class: "w-full h-[350px] object-cover rounded-lg" %>
           <% end %>
