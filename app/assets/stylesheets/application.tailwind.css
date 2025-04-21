@@ -4,3 +4,23 @@
     @apply w-full px-6 py-3 text-lg font-semibold text-[#84A08E] bg-white rounded-lg shadow-md hover:bg-gray-100 text-center;
   }
 }
+
+@keyframes move-left {
+  0% { transform: translateX(-20px); z-index: 2; }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(-20px); }
+}
+
+@keyframes move-right {
+  0% { transform: translateX(20px); }
+  50% { transform: translateX(-20px); }
+  100% { transform: translateX(20px); z-index: 2; }
+}
+
+.kiri {
+  animation: move-left 1.2s infinite linear;
+}
+
+.kanan {
+  animation: move-right 1.2s infinite linear;
+}
