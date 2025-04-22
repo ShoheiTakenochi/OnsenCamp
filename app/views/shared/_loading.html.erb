@@ -1,0 +1,44 @@
+<div class="bg-gradient-to-b from-[#33495E] to-[#2E2329] h-screen flex flex-col justify-center items-center">
+  <h1 class="text-[#84A08E] font-light text-sm tracking-wide mb-6">Now Loading Map</h1>
+  <div class="relative w-24 h-10 loader">
+    <span class="triangle kiri absolute left-1/2 -ml-[12px] top-0 z-30" style="width: 24px; height: 24px;"></span>
+    <span class="triangle center absolute left-1/2 -ml-[12px] top-0 z-30" style="width: 24px; height: 24px;"></span>
+    <span class="triangle kanan absolute left-1/2 -ml-[12px] top-0 z-30" style="width: 24px; height: 24px;"></span>
+  </div>
+</div>
+
+<style>
+  .triangle {
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 24px solid gray;
+  }
+
+  .kiri {
+    border-bottom-color: orange;
+    animation: ping-slow-left 1.5s infinite ease-in-out;
+  }
+
+  .center {
+    border-bottom-color: #84A08E;
+  }
+
+  .kanan {
+    border-bottom-color: gray;
+    animation: ping-slow-right 1.5s infinite ease-in-out;
+  }
+
+  @keyframes ping-slow-left {
+    0% { transform: translateX(0); opacity: 1; }
+    50% { transform: translateX(-30px); opacity: 0.6; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+
+  @keyframes ping-slow-right {
+    0% { transform: translateX(0); opacity: 1; }
+    50% { transform: translateX(30px); opacity: 0.6; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+</style>
