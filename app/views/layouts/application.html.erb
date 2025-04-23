@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <%= favicon_link_tag 'favicon.png' %>
     <title><%= content_for?(:title) ? yield(:title) : "OnsenCamp" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'キャンプ場と温泉施設を組み合わせて検索できるサービスです。' %>">
 
