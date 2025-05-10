@@ -50,6 +50,8 @@ gem "aws-sdk-s3"
 
 gem "rails-i18n"
 
+gem "letter_opener"
+
 gem "omniauth"
 gem "omniauth-google-oauth2"
 
