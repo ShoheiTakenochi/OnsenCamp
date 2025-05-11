@@ -483,7 +483,6 @@ DEPENDENCIES
   httparty
   jbuilder
   jsbundling-rails
-  letter_opener
   letter_opener_web
   omniauth
   omniauth-google-oauth2

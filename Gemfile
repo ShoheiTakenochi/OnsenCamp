@@ -49,9 +49,6 @@ gem "httparty"
 gem "aws-sdk-s3"
 
 gem "rails-i18n"
-
-gem "letter_opener"
-
 gem "omniauth"
 gem "omniauth-google-oauth2"
 
@@ -71,7 +68,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'letter_opener_web'
+  gem "letter_opener_web"
 end
 
 group :test do
