@@ -42,11 +42,7 @@
           <div style="max-width: 250px;">
             <h3><%= campsite.name %></h3>
             <p><%= campsite.address %></p>
-            <% if campsite.images.attached? %>
-              <img src="<%= url_for(campsite.images.first) %>" alt="キャンプ場の画像" style="width: 100%; border-radius: 8px;">
-            <% else %>
-              <%= image_tag "default_campsite.PNG", alt: "キャンプ場のサブ画像", style: "width: 100%; border-radius: 8px;" %>
-            <% end %>
+            <%= image_tag "default_campsite.PNG", alt: "キャンプ場画像", style: "width: 100%; border-radius: 8px;" %>
             <p>
               <a
                 class="inline-flex items-center gap-2 rounded-sm border border-[#84A08E] bg-[#84A08E] px-8 py-3 text-white hover:bg-transparent hover:text-[#84A08E] focus:ring-3 focus:outline-hidden"
