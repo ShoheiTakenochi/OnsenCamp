@@ -5,8 +5,8 @@
 <% content_for :og_description, "#{@campsite.name}の詳細情報を掲載しています。" %>
 <% content_for :og_image, @campsite.images.attached? ? url_for(@campsite.images.first) : image_url('default_campsite.PNG') %>
 
-<div class="flex">
-  <div class="w-1/2">
+<div class="flex flex-col lg:flex-row">
+  <div class="w-full lg:w-1/2">
     <div class="flow-root">
       <dl class="p-4 -my-3 divide-y divide-green-200 text-sm dark:divide-gray-700">
         <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
@@ -60,8 +60,8 @@
     </dl>
   </div>
 
-  <div class="w-1/2">
-    <div id="map" style="height: 1000px;"></div>
+  <div class="w-full lg:w-1/2">
+    <div id="map"style="width:100%; height:60vh; min-height:400px;"class="lg:h-auto">
   </div>
 </div>
 
